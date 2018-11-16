@@ -38,7 +38,6 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
 	      b[ i ][ j ].addActionListener(this);
 		   b[ i ][ j ].addMouseListener(this);
 		}
-
         setBomb(10);
 
 	setSize(500,500);
