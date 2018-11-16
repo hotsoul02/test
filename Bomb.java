@@ -28,11 +28,10 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
 	long startTime;
 	long endTime;
 	
- 
 	for(int i=0;i<9;i++)
 	for(int j=0;j<9;j++)	
            b[i][j]=new Bomb(i,j);
-    setLayout(new GridLayout(9,9));
+ 
        for(int i=0;i<9;i++)
 		for(int j=0;j<9;j++)
 		{add(b[i][j]);
@@ -40,33 +39,33 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
 		   b[ i ][ j ].addMouseListener(this);
 		}
 
-     setBomb(10);
+        setBomb(10);
 
-	 setSize(500,500);
-     setVisible(true);
+	setSize(500,500);
+   	setVisible(true);
+	setLayout(new GridLayout(9,9));
 
 	}
   
     public void setBomb(int n){
 		while(n>0){
 	     int x =(int)(Math.random()*(9));  
-         int y =(int)(Math.random()*(9));  
+             int y =(int)(Math.random()*(9));  
 	     if (b[x][y].isBomb==false)
 	       {  n--;
 	        b[x][y].isBomb=true;
 	       }
 	    }
-		countRoundBombNum();
+	countRoundBombNum();
 	}
  public void replay(){
 	  for(int i=0;i<9;i++)
 	   for(int j=0;j<9;j++)	
-	 { b[i][j].isBomb=false;
-    b[i][j].isVisited=false;
-    b[i][j].roundBombNum=0;
- b[i][j].setText("");
-      
-	 }
+	 { 	b[i][j].isBomb=false;
+  		b[i][j].isVisited=false;
+   	        b[i][j].roundBombNum=0;
+   	        b[i][j].setText("");
+	}
 	 setBomb(10);
   }
 
@@ -93,8 +92,6 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
 		  
 	}
 
-//  int f,g;
-
   public void extend(int f,int g){
      
   if((f-1>=0)&&(g-1>=0)&&b[f-1][g-1].isVisited==false)   { b[f-1][g-1].setText( String.valueOf(b[f-1][g-1].roundBombNum) );b[f-1][g-1].isVisited=true;}
@@ -108,74 +105,23 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
 
 
 
-     if(((f-1>=0)&&(g-1>=0))&&(b[f-1][g-1].roundBombNum==0)){
-                
-		     				 extend(f-1,g-1);
-	 }
+     if(((f-1>=0)&&(g-1>=0))&&(b[f-1][g-1].roundBombNum==0))      { extend(f-1,g-1);} 
+     
+     if(((f-1>=0)&&(g>=0))&&(b[f-1][g].roundBombNum==0))          { extend(f-1,g); }
+
+     if(((f-1>=0)&&(g+1<=8))&&(b[f-1][g+1].roundBombNum==0))      { extend(f-1,g+1); }
+	
+     if(((f>=0)&&(g-1>=0))&&(b[f][g-1].roundBombNum==0))	  { extend(f,g-1);}
+	
+     if(((f>=0)&&(g+1<=8))&&(b[f][g+1].roundBombNum==0))	  { extend(f,g+1); }
 	 
-		 
-     
-	  if(((f-1>=0)&&(g>=0))&&(b[f-1][g].roundBombNum==0)){
-                
-		      				 extend(f-1,g);
-	 }
+     if(((f+1<=8)&&(g-1>=0))&&(b[f+1][g-1].roundBombNum==0))      { extend(f+1,g-1);}
 	
-		 
-
-    
-	 if(((f-1>=0)&&(g+1<=8))&&(b[f-1][g+1].roundBombNum==0)){
-            
-				 extend(f-1,g+1);
-	 }
+     if(((f+1<=8)&&(g>=0))&&(b[f+1][g].roundBombNum==0))	  { extend(f+1,g);}
 	
+     if(((f+1<=8)&&(g+1<=8))&&(b[f+1][g+1].roundBombNum==0))      { extend(f+1,g+1);}
 	
-
-
-
-
-      if(((f>=0)&&(g-1>=0))&&(b[f][g-1].roundBombNum==0)){
-              
-				 extend(f,g-1);
-	 }
-	
-		
-
-
-     
-	  if(((f>=0)&&(g+1<=8))&&(b[f][g+1].roundBombNum==0)){
-              
-				 extend(f,g+1);
-	 }
-	
-		 
-    
-
-      if(((f+1<=8)&&(g-1>=0))&&(b[f+1][g-1].roundBombNum==0)){
-                
-		      	 extend(f+1,g-1);
-	 }
-	
-		 
-
-   
-      if(((f+1<=8)&&(g>=0))&&(b[f+1][g].roundBombNum==0)){
-              
-				 extend(f+1,g);
-	 }
-	
-		 
-
-      if(((f+1<=8)&&(g+1<=8))&&(b[f+1][g+1].roundBombNum==0)){
-               
-				 extend(f+1,g+1);
-	 }
-	
-		
-
-
-
-  }
-
+}
 
    public void isWin(){
       int countNotBomb=0;
@@ -187,30 +133,25 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
          JOptionPane.showMessageDialog(this,"您挖完了所有的雷，您胜利了!","您胜利了",2); 
 		replay();
 	  }
-	  }
+	}
 	  
-   }
-
+ }
 
   public void listBomb(){
      for(int i=0;i<9;i++)
 	  {for(int j=0;j<9;j++)	{
        if(b[i][j].isBomb==true) b[i][j].setText("雷" );} }
 	    JOptionPane.showMessageDialog(this,"你踩到地雷了，按确定重来","你踩到地雷了",2);  
-    
-	 
+ 
 	   replay();
-	 
-  }
+}
 
 
    public void actionPerformed(ActionEvent e) 
   { 
-   
-
    if (((Bomb)e.getSource()).isBomb==true)
    {((Bomb)e.getSource()).setText("雷" );
- 
+   
     listBomb();
    }
    else {
@@ -240,8 +181,6 @@ class MyFrame extends JFrame  implements ActionListener,MouseListener
 public void mousePressed(MouseEvent e) {}
 public void mouseReleased(MouseEvent e) {}
 }
-
-
 
 public class Abc5 
 {
