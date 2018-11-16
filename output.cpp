@@ -15,6 +15,5 @@ int main()
 	cout<<"k="<<k<<endl;
 	cout<<"k="<<setprecision(4)<<k<<endl;
 	cout<<"k="<<setiosflags(ios::left)<<setiosflags(ios::fixed)<<k<<endl;  //左对齐，定点格式输出
-
 	return 0;
 }
